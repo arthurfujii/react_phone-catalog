@@ -12,13 +12,13 @@ export const HomePage = () => {
   const [sortedByPrice, setSortByPrice] = useState<Product[]>([]);
 
   useEffect(() => {
-    getProducts('age').then(products => {
+    getProducts(undefined, 15).then(products => {
       setSortByYear(products);
     });
   }, []);
 
   useEffect(() => {
-    getProducts('price').then(products => {
+    getProducts('price', 15).then(products => {
       setSortByPrice(products);
     });
   }, []);

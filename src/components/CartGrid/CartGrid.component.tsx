@@ -1,11 +1,10 @@
-import { Product } from '../../types/Product';
+import { useContext } from 'react';
 import { CartProductCard } from '../CartProductCard/CartProductCard.component';
+import { StatesContext } from '../../store/GlobalStateProvider';
 
-type Props = {
-  cart: Product[];
-};
+export const CartGrid: React.FC = () => {
+  const { cart } = useContext(StatesContext);
 
-export const CartGrid: React.FC<Props> = ({ cart }) => {
   return (
     <>
       <div className="cartGrid">
