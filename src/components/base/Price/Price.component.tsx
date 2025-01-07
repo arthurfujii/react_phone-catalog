@@ -1,9 +1,9 @@
-import { ProductSummary } from '../../../types/ProductSummary';
+import { Product } from '../../../types/Product';
 import { calculateDiscount } from '../../../utils/calculateDiscount';
 
 type Props = {
   showDiscount?: boolean;
-  product: ProductSummary;
+  product: Product;
 };
 
 export const Price: React.FC<Props> = ({ showDiscount, product }) => {
@@ -13,7 +13,7 @@ export const Price: React.FC<Props> = ({ showDiscount, product }) => {
         {showDiscount ? (
           <>
             <div className="price-current">
-              <h3>${product.price}</h3>
+              <h3>${product.fullPrice}</h3>
             </div>
             <div className="price-full">${product.fullPrice}</div>
             <h3 className="price-discount">

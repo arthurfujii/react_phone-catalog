@@ -4,22 +4,22 @@ import { ProductSlider } from '../../components/base/ProductSlider/ProductSlider
 // eslint-disable-next-line max-len
 import { ShopByCategory } from '../../components/ShopByCategory/ShopByCategory.component';
 import { Welcome } from '../../components/Welcome/Welcome.component';
-import { calculateDiscount } from '../../utils/calculateDiscount';
-import { getProductsSummary } from '../../api/products';
-import { ProductSummary } from '../../types/ProductSummary';
+import { getProducts } from '../../api/products';
+import { Product } from '../../types/Product';
 
 export const HomePage = () => {
-  const [sortByYear, setSortByYear] = useState<ProductSummary[]>([]);
-  const [sortByDiscount, setSortByDiscount] = useState<ProductSummary[]>([]);
+  const [sortedByYear, setSortByYear] = useState<Product[]>([]);
+  const [sortedByPrice, setSortByPrice] = useState<Product[]>([]);
 
   useEffect(() => {
-    getProductsSummary().then(products => {
-      setSortByYear([...products].sort((a, b) => b.year - a.year));
-      setSortByDiscount(
-        [...products].sort(
-          (a, b) => calculateDiscount(b) - calculateDiscount(a),
-        ),
-      );
+    getProducts('age').then(products => {
+      setSortByYear(products);
+    });
+  }, []);
+
+  useEffect(() => {
+    getProducts('price').then(products => {
+      setSortByPrice(products);
     });
   }, []);
 
@@ -28,13 +28,13 @@ export const HomePage = () => {
       <Welcome />
       <ProductSlider
         title={'Brand new models'}
-        products={sortByYear}
+        products={sortedByYear}
         showDiscount={false}
       />
       <ShopByCategory />
       <ProductSlider
         title={'Hot prices'}
-        products={sortByDiscount}
+        products={sortedByPrice}
         showDiscount={true}
       />
     </div>

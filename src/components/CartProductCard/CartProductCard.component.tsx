@@ -4,10 +4,10 @@ import {
   DispatchContext,
   StatesContext,
 } from '../../store/GlobalStateProvider';
-import { ProductSummary } from '../../types/ProductSummary';
+import { Product } from '../../types/Product';
 
 type Props = {
-  product: ProductSummary;
+  product: Product;
 };
 
 export const CartProductCard: React.FC<Props> = ({ product }) => {
@@ -46,7 +46,7 @@ export const CartProductCard: React.FC<Props> = ({ product }) => {
           iconSize="16"
           onClick={handleDeleteClick}
         />
-        <img src={`./${product.image}`} className="cartCard__image" />
+        <img src={`./${product.images[0]}`} className="cartCard__image" />
         <div className="cartCard__product-name">{product.name}</div>
       </div>
       <div className="cartCard__counterAndPrice">
@@ -69,7 +69,7 @@ export const CartProductCard: React.FC<Props> = ({ product }) => {
           />
         </div>
         <h3 className="cardCard__price">
-          {product.quantity && `$${product.price * product.quantity}`}
+          {product.quantity && `$${product.discountPrice * product.quantity}`}
         </h3>
       </div>
     </div>

@@ -1,27 +1,32 @@
-import { useContext } from 'react';
-import { StatesContext } from '../../store/GlobalStateProvider';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getCategories } from '../../api/products';
+import { Category } from '../../types/Category';
 
 export const ShopByCategory = () => {
-  const { categories } = useContext(StatesContext);
+  const [categories, setCategories] = useState<Category[] | []>([]);
+
+  useEffect(() => {
+    getCategories().then((cats: Category[]) => setCategories(cats));
+  }, []);
 
   return (
     <section className="category">
       <h2>Shop by category</h2>
       <div className="category__container">
         {categories.map(cat => (
-          <article className="category__group" key={cat.id}>
-            <Link to={`/${cat.id}`} className="category__link">
+          <article className="category__group" key={cat.category_name}>
+            <Link to={`/${cat.category_name}`} className="category__link">
               <figure className="category__image-frame">
                 <img
-                  src={`./img/category-${cat.id}-sqr.png`}
-                  alt={cat.title}
+                  src={`./img/category-${cat.category_name}-sqr.png`}
+                  alt={cat.category_name}
                   className="category__image"
                 />
                 <figcaption className="category__figure-caption">
-                  <h4>{cat.title}</h4>
+                  <h4>{cat.category_name}</h4>
                   <span className="category__figure-caption-models">
-                    {cat.productsCount} models
+                    {cat.products_count} models
                   </span>
                 </figcaption>
               </figure>

@@ -1,15 +1,10 @@
-import { Category } from './Category';
-import { ProductSpecs } from './ProductSpecs';
-import { ProductSummary } from './ProductSummary';
+import { Product } from './Product';
 
 export interface States {
-  products: ProductSummary[];
-  productSpecs: ProductSpecs[];
-  cart: ProductSummary[];
-  favorites: ProductSummary[];
-  categories: Category[];
+  cart: Product[];
+  favorites: Product[];
   isMenuOpen: boolean;
   isReady: boolean;
   totalCartItems: number;
-  selectedProduct: ProductSpecs | undefined;
+  selectedProduct: Product | undefined;
 }

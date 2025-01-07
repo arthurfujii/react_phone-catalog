@@ -1,16 +1,11 @@
 import { createContext, useReducer } from 'react';
 import { States } from '../types/State';
-import { ProductSummary } from '../types/ProductSummary';
-import { Category } from '../types/Category';
 import { getLocalStorage } from '../utils/getLocalStorage';
-import { ProductSpecs } from '../types/ProductSpecs';
+import { Product } from '../types/Product';
 
 const initialStates = {
-  products: [],
-  productSpecs: [],
   cart: getLocalStorage('cart', []),
   favorites: getLocalStorage('favs', []),
-  categories: [],
   isMenuOpen: false,
   isReady: false,
   totalCartItems: 0,
@@ -18,15 +13,14 @@ const initialStates = {
 };
 
 type Action =
-  | { type: 'loadCategories'; payload: Category[] }
-  | { type: 'updateCart'; payload: ProductSummary[] }
+  | { type: 'updateCart'; payload: Product[] }
   | { type: 'updateTotalCartItems'; payload: number }
-  | { type: 'updateFavorites'; payload: ProductSummary[] }
-  | { type: 'increaseQuantity'; payload: number }
-  | { type: 'decreaseQuantity'; payload: number }
+  | { type: 'updateFavorites'; payload: Product[] }
+  | { type: 'increaseQuantity'; payload: string }
+  | { type: 'decreaseQuantity'; payload: string }
   | { type: 'isMenuOpen'; payload: boolean }
   | { type: 'isReady'; payload: boolean }
-  | { type: 'selectedProduct'; payload: ProductSpecs };
+  | { type: 'selectedProduct'; payload: Product };
 
 type DispatchContextType = {
   (action: Action): void;
@@ -35,9 +29,6 @@ function reducer(states: States, action: Action) {
   let newStates: States = { ...states };
 
   switch (action.type) {
-    case 'loadCategories':
-      newStates = { ...newStates, categories: action.payload };
-      break;
     case 'updateCart':
       newStates = { ...newStates, cart: action.payload };
       break;

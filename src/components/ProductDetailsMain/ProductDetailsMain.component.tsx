@@ -4,22 +4,22 @@ import { StatesContext } from '../../store/GlobalStateProvider';
 import { Line } from '../base/Line/Line.component';
 import cn from 'classnames';
 import { Price } from '../base/Price/Price.component';
-import { getProductsSummary } from '../../api/products';
-import { ProductSummary } from '../../types/ProductSummary';
 import { CardButtons } from '../base/CardButtons/CardButtons.component';
 import { SpecsMini } from '../base/SpecsMini/SpecsMini.component';
 import { colors } from '../../utils/colors';
+import { Product } from '../../types/Product';
+import { getProducts } from '../../api/products';
 
 export const ProductDetailsMain: React.FC = () => {
   const { selectedProduct } = useContext(StatesContext);
-  const [product, setProduct] = useState<ProductSummary>();
+  const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
-    getProductsSummary().then(prods => {
+    getProducts().then((prods: Product[]) => {
       if (selectedProduct) {
-        const prodSummary = prods.find(p => p.itemId === selectedProduct.id);
+        const selected = prods.find(p => p.id === selectedProduct.id);
 
-        setProduct(prodSummary);
+        setProduct(selected);
       }
     });
   }, [selectedProduct]);
@@ -32,11 +32,11 @@ export const ProductDetailsMain: React.FC = () => {
             Available colors
           </span>
           <div className="productDetailsMain__colors-button-container">
-            {selectedProduct.colorsAvailable.map((c, i) => (
+            {selectedProduct.avaiableVariants.colorsAvaiable.map((c, i) => (
               <button
                 className={cn('productDetailsMain__colors-button-bg', {
                   'productDetailsMain__colors-button-bg--selected':
-                    c === selectedProduct.color,
+                    c === selectedProduct.specs.color,
                 })}
                 key={i + c}
               >
@@ -54,12 +54,12 @@ export const ProductDetailsMain: React.FC = () => {
             Select capacity
           </span>
           <div className="productDetailsMain__capacity-container">
-            {selectedProduct.capacityAvailable.map((c, i) => (
+            {selectedProduct.avaiableVariants.capacityAvailable.map((c, i) => (
               <button
                 key={c + i}
                 className={cn('productDetailsMain__capacity-button', {
                   'productDetailsMain__capacity-button--selected':
-                    c === selectedProduct.capacity,
+                    c === selectedProduct.specs.capacity,
                 })}
               >
                 {c}

@@ -4,12 +4,12 @@ import {
   StatesContext,
   DispatchContext,
 } from '../../../store/GlobalStateProvider';
-import { ProductSummary } from '../../../types/ProductSummary';
 import { Button } from '../Button/Button.component';
 import { Icon } from '../Icon/Icon.component';
+import { Product } from '../../../types/Product';
 
 type Props = {
-  product: ProductSummary;
+  product: Product;
 };
 
 export const CardButtons: React.FC<Props> = ({ product }) => {
@@ -28,7 +28,7 @@ export const CardButtons: React.FC<Props> = ({ product }) => {
   const removeFromCart = () => {
     dispatch({
       type: 'updateCart',
-      payload: [...cart.filter(p => p.itemId !== product.itemId)],
+      payload: [...cart.filter(p => p.id !== product.id)],
     });
   };
 
@@ -39,16 +39,16 @@ export const CardButtons: React.FC<Props> = ({ product }) => {
   const removeFromFavorites = () => {
     dispatch({
       type: 'updateFavorites',
-      payload: [...favorites.filter(p => p.itemId !== product.itemId)],
+      payload: [...favorites.filter(p => p.id !== product.id)],
     });
   };
 
   useEffect(() => {
-    setIsFavorited(!!favorites.find(p => p.itemId === product.itemId));
+    setIsFavorited(!!favorites.find(p => p.id === product.id));
   }, [favorites, product]);
 
   useEffect(() => {
-    setIsAddedToCart(!!cart.find(p => p.itemId === product.itemId));
+    setIsAddedToCart(!!cart.find(p => p.id === product.id));
   }, [cart, product]);
 
   return (

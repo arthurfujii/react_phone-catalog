@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ProductCard } from '../base/ProductCard/ProductCard.component';
-import { ProductSummary } from '../../types/ProductSummary';
 import { getPageNumbers } from '../../utils/getPageNumbers';
 import { Pagination } from '../Pagination/Pagination.component';
 import { SortOptions } from '../SortOptions/SortOptions.component';
 import { useSearchParams } from 'react-router-dom';
+import { Product } from '../../types/Product';
 
 type Props = {
-  productsArray: ProductSummary[];
+  productsArray: Product[];
   pagination?: boolean;
 };
 function getVisibleProducts(
-  products: ProductSummary[],
+  products: Product[],
   page: number,
   perPage: number,
 ) {
@@ -23,9 +23,7 @@ function getVisibleProducts(
 
 export const ProductGrid: React.FC<Props> = ({ productsArray, pagination }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [products, setProducts] = useState<ProductSummary[]>([
-    ...productsArray,
-  ]);
+  const [products, setProducts] = useState<Product[]>([...productsArray]);
   const sort = searchParams.get('sort') || '';
   const perPage = +(searchParams.get('perPage') || products.length);
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +44,9 @@ export const ProductGrid: React.FC<Props> = ({ productsArray, pagination }) => {
         );
         break;
       case 'price':
-        setProducts(sortedProducts.sort((a, b) => a.price - b.price));
+        setProducts(
+          sortedProducts.sort((a, b) => a.discountPrice - b.discountPrice),
+        );
         break;
       default:
         setProducts(sortedProducts.sort((a, b) => b.year - a.year));

@@ -1,7 +1,7 @@
-import { ProductSummary } from '../../../types/ProductSummary';
+import { Product } from '../../../types/Product';
 
 type Props = {
-  product: ProductSummary;
+  product: Product;
 };
 
 export const SpecsMini: React.FC<Props> = ({ product }) => {
@@ -9,15 +9,15 @@ export const SpecsMini: React.FC<Props> = ({ product }) => {
     <div className="specsMini">
       <div className="specsMini-line">
         <div className="specsMini-title">Screen</div>
-        <div className="specsMini-content">{product.screen}</div>
+        <div className="specsMini-content">{product.specs.screen}</div>
       </div>
       <div className="specsMini-line">
         <div className="specsMini-title">Capacity</div>
-        <div className="specsMini-content">{product.capacity}</div>
+        <div className="specsMini-content">{product.specs.capacity}</div>
       </div>
       <div className="specsMini-line">
         <div className="specsMini-title">RAM</div>
-        <div className="specsMini-content">{product.ram}</div>
+        <div className="specsMini-content">{product.specs.ram}</div>
       </div>
     </div>
   );

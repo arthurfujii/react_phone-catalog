@@ -50,12 +50,14 @@ export const Nav: React.FC<Props> = ({ navStyle }) => {
         {categories.map((category, idx) => {
           return (
             <Link
-              to={`${category.id}`}
+              to={`${category.category_name}`}
               className={cn('nav__link', `nav__link--${navStyle}`)}
               key={idx + 1}
               onClick={handleClick}
             >
-              <li className="nav__item">{category.id.toUpperCase()}</li>
+              <li className="nav__item">
+                {category.category_name.toUpperCase()}
+              </li>
             </Link>
           );
         })}

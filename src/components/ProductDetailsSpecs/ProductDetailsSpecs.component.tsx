@@ -16,39 +16,39 @@ export const ProductDetailsSpecs = () => {
           <div className="productDetailsSpecs__line">
             <div className="productDetailsSpecs__key">Screen</div>
             <div className="productDetailsSpecs__value">
-              {selectedProduct.screen}
+              {selectedProduct.specs.screen}
             </div>
           </div>
           <div className="productDetailsSpecs__line">
             <div className="productDetailsSpecs__key">Resolution</div>
             <div className="productDetailsSpecs__value">
-              {selectedProduct.resolution}
+              {selectedProduct.specs.resolution}
             </div>
           </div>
           <div className="productDetailsSpecs__line">
             <div className="productDetailsSpecs__key">Processor</div>
             <div className="productDetailsSpecs__value">
-              {selectedProduct.processor}
+              {selectedProduct.specs.processor}
             </div>
           </div>
           <div className="productDetailsSpecs__line">
             <div className="productDetailsSpecs__key">RAM</div>
             <div className="productDetailsSpecs__value">
-              {selectedProduct.ram}
+              {selectedProduct.specs.ram}
             </div>
           </div>
-          {selectedProduct.category !== 'accessories' && (
+          {selectedProduct.categoryId !== 'accessories' && (
             <>
               <div className="productDetailsSpecs__line">
                 <div className="productDetailsSpecs__key">Camera</div>
                 <div className="productDetailsSpecs__value">
-                  {selectedProduct.camera}
+                  {selectedProduct.specs.camera}
                 </div>
               </div>
               <div className="productDetailsSpecs__line">
                 <div className="productDetailsSpecs__key">Zoom</div>
                 <div className="productDetailsSpecs__value">
-                  {selectedProduct.zoom}
+                  {selectedProduct.specs.zoom}
                 </div>
               </div>
             </>
@@ -56,7 +56,7 @@ export const ProductDetailsSpecs = () => {
           <div className="productDetailsSpecs__line">
             <div className="productDetailsSpecs__key">Cell</div>
             <div className="productDetailsSpecs__value">
-              {selectedProduct.cell.join(', ')}
+              {selectedProduct.specs.cell.join(', ')}
             </div>
           </div>
         </div>

@@ -5,16 +5,24 @@ import { ProductGrid } from '../../components/ProductGrid/ProductGrid.component'
 import { CategoryTitle } from '../../components/CategoryTitle/CategoryTitle.component';
 // eslint-disable-next-line max-len
 import { NavigationPath } from '../../components/NavigationPath/NavigationPath.component';
-import { StatesContext } from '../../store/GlobalStateProvider';
-import { useContext, useEffect, useState } from 'react';
-import { getCategoryByCatId } from '../../api/products';
+import { useEffect, useState } from 'react';
 import { Category } from '../../types/Category';
+import { getCategoryByCatId, getProductsByCatId } from '../../api/products';
+import { Product } from '../../types/Product';
 
 export const CatalogPage: React.FC = () => {
-  const { category: categoryId } = useParams();
-  const { products } = useContext(StatesContext);
+  const { category: categoryId } = useParams<string>();
   const [category, setCategory] = useState<Category>();
+  const [products, setProducts] = useState<Product[]>();
   const [isReady, setIsReady] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (categoryId) {
+      getProductsByCatId(categoryId).then(prods => {
+        setProducts(prods);
+      });
+    }
+  }, [categoryId]);
 
   useEffect(() => {
     if (categoryId) {
@@ -33,12 +41,12 @@ export const CatalogPage: React.FC = () => {
   if (isReady && category && products) {
     return (
       <section className="catalog-page">
-        <NavigationPath firstLevel={category.id} />
+        <NavigationPath firstLevel={category.category_name} />
         <CategoryTitle
-          title={category.title}
-          productsCount={category.products?.length}
+          title={`${category.category_name.charAt(0).toUpperCase()}${category.category_name.slice(1)}`}
+          productsCount={products.length}
         />
-        <ProductGrid productsArray={category.products} pagination />
+        <ProductGrid productsArray={products} pagination />
       </section>
     );
   } else {

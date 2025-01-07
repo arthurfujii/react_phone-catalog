@@ -9,7 +9,10 @@ export const CartCheckout: React.FC = () => {
   useEffect(
     () =>
       setTotalPrice(
-        cart.reduce((acc, prod) => acc + (prod.quantity ?? 1) * prod.price, 0),
+        cart.reduce(
+          (acc, prod) => acc + (prod.quantity ?? 1) * prod.discountPrice,
+          0,
+        ),
       ),
     [cart],
   );

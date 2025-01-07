@@ -1,8 +1,8 @@
-import { ProductSummary } from '../../types/ProductSummary';
+import { Product } from '../../types/Product';
 import { CartProductCard } from '../CartProductCard/CartProductCard.component';
 
 type Props = {
-  cart: ProductSummary[];
+  cart: Product[];
 };
 
 export const CartGrid: React.FC<Props> = ({ cart }) => {

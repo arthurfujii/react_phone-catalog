@@ -7,7 +7,7 @@
   &__link {
     text-decoration: none;
     color: $c-primary;
-    
+
     &:link, &:visited, &:hover, &:focus, &:active {
       color: $c-primary;
     }
@@ -44,6 +44,5 @@
       transform: scale(1.05);
     }
   }
-
 
 }

@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState, TouchEvent } from 'react';
 import { ProductCard } from '../ProductCard/ProductCard.component';
 import { Icon } from '../Icon/Icon.component';
-import { ProductSummary } from '../../../types/ProductSummary';
+import { Product } from '../../../types/Product';
 
 type Props = {
   title: string;
-  products: ProductSummary[];
+  products: Product[];
   showDiscount: boolean;
 };
 const cardGap = 8;

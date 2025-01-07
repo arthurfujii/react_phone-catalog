@@ -1,9 +1,5 @@
-import { ProductSummary } from './ProductSummary';
-
 export type Category = {
-  id: string;
-  title: string;
+  category_name: string;
   bannerImg: string;
-  products: ProductSummary[];
-  productsCount: number;
+  products_count: number;
 };

@@ -6,7 +6,11 @@ import {
   StatesContext,
 } from '../../store/GlobalStateProvider';
 import { useParams } from 'react-router-dom';
-import { getProductsSummary, locateProduct } from '../../api/products';
+import {
+  getCategories,
+  getProductByProdId,
+  getProducts,
+} from '../../api/products';
 import { BackPath } from '../../components/BackPath/BackPath.component';
 // eslint-disable-next-line max-len
 import { ProductDetailsMain } from '../../components/ProductDetailsMain/ProductDetailsMain.component';
@@ -16,20 +20,29 @@ import { ProductDetailsDescription } from '../../components/ProductDetailsDescri
 import { ProductDetailsSpecs } from '../../components/ProductDetailsSpecs/ProductDetailsSpecs.component';
 // eslint-disable-next-line max-len
 import { ProductSlider } from '../../components/base/ProductSlider/ProductSlider.component';
-import { ProductSummary } from '../../types/ProductSummary';
 // eslint-disable-next-line max-len
 import { ProductDetailsCarousel } from '../../components/ProductDetailsCarousel/ProductDetailsCarousel.component';
+import { Product } from '../../types/Product';
+import { Category } from '../../types/Category';
 
 export const ProductDetailsPage = () => {
   const { productId } = useParams();
   const { category: categoryId } = useParams();
-  const { categories, isReady, selectedProduct } = useContext(StatesContext);
+  const { isReady, selectedProduct } = useContext(StatesContext);
   const dispatch = useContext(DispatchContext);
-  const category = categories.find(cat => cat.id === categoryId);
-  const [suggested, setSuggested] = useState<ProductSummary[]>();
+  const [category, setCategory] = useState<Category>();
+  const [suggested, setSuggested] = useState<Product[]>();
 
   useEffect(() => {
-    locateProduct(productId as string, categoryId as string).then(prod => {
+    getCategories().then(cats => {
+      setCategory(
+        cats.find((cat: Category) => cat.category_name === categoryId),
+      );
+    });
+  }, [categoryId]);
+
+  useEffect(() => {
+    getProductByProdId(categoryId, productId).then(prod => {
       if (prod) {
         dispatch({ type: 'selectedProduct', payload: prod });
       }
@@ -39,8 +52,10 @@ export const ProductDetailsPage = () => {
   }, [categoryId, dispatch, productId]);
 
   useEffect(() => {
-    getProductsSummary().then(prods => {
-      setSuggested(prods.filter(p => p.category === selectedProduct?.category));
+    getProducts().then(prods => {
+      setSuggested(
+        prods.filter(p => p.categoryId === selectedProduct?.categoryId),
+      );
     });
   }, [selectedProduct]);
 
@@ -48,7 +63,7 @@ export const ProductDetailsPage = () => {
     return (
       <div className="productDetails-page">
         <NavigationPath
-          firstLevel={category.id}
+          firstLevel={category.category_name}
           secondLevel={selectedProduct.name}
         />
         <BackPath />
