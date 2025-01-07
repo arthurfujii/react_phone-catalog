@@ -21,11 +21,6 @@ export const CatalogPage: React.FC = () => {
       getProductsByCatId(categoryId).then(prods => {
         setProducts(prods);
       });
-    }
-  }, [categoryId]);
-
-  useEffect(() => {
-    if (categoryId) {
       getCategoryByCatId(categoryId)
         .then(cat => {
           setCategory(cat);
@@ -33,6 +28,8 @@ export const CatalogPage: React.FC = () => {
         .finally(() => setIsReady(true));
     }
   }, [categoryId]);
+
+  useEffect(() => {}, [categoryId]);
 
   if (isReady && !category) {
     return <Navigate to="notfound" />;

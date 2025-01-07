@@ -15,7 +15,7 @@ export const App = () => {
       type: 'updateTotalCartItems',
       payload: cart.reduce((acc, prod) => acc + (prod.quantity ?? 1), 0),
     });
-  }, [cart]);
+  }, [cart, dispatch]);
 
   return (
     <div className="App">

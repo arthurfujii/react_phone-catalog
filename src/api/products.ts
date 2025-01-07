@@ -7,9 +7,12 @@ const instance = axios.create({
   timeout: 10000,
 });
 
-export async function getProducts(sort?: string): Promise<Product[]> {
+export async function getProducts(
+  sort?: string,
+  limit?: number,
+): Promise<Product[]> {
   const result = await instance
-    .get(`/products`, { params: { sort } })
+    .get(`/products`, { params: { sort, limit } })
     .then((response: AxiosResponse) => {
       return response.data;
     })
